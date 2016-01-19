@@ -1,14 +1,15 @@
 /// <reference path="../../../typings/leaflet/leaflet.d.ts"/>
 
-import {Component, View, ViewChild} from 'angular2/core';
+import {Component, View, ViewChild, Renderer} from 'angular2/core';
 import {NavigatorComponent} from '../navigator/navigator.component';
 import {MarkerComponent} from '../marker/marker.component';
-import {MapService} from '../../services/map.service';
-import {GeocodingService} from '../../services/geocoding.service';
 import {Location} from '../../core/location.class';
+import {MapService, GeocodingService, ModalService} from '../../services/services';
+import {Modal} from '../../../node_modules/angular2-modal/dist/angular2-modal';
 
 @Component({
-    selector: 'app'
+    selector: 'app',
+    providers: [ModalService, Modal, Renderer]
 })
 @View({
     template: require('./app.component.html'),
@@ -20,15 +21,19 @@ import {Location} from '../../core/location.class';
 export class AppComponent {
     private mapService: MapService;
     private geocoder: GeocodingService;
+    private modal: ModalService;
 
     @ViewChild(MarkerComponent) markerComponent:MarkerComponent;
 
-    constructor(mapService: MapService, geocoder: GeocodingService) {
+    constructor(mapService: MapService, geocoder: GeocodingService, modal: ModalService) {
         this.mapService = mapService;
         this.geocoder = geocoder;
+        this.modal = modal;
     }
 
     ngOnInit() {
+        this.modal.showAbout();
+
         var map = new L.Map('map', {
           zoomControl: false,
           center: new L.LatLng(40.731253, -73.996139),

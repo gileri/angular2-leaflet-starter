@@ -6,9 +6,9 @@ export class ModalService {
     aboutConfig: ModalConfig;
     aboutContent: OKOnlyContent;
 
-    constructor(private modal: Modal, private injector: Injector) {
+    constructor(private modal: Modal, private injector: Injector, private renderer: Renderer) {
         this.aboutConfig = new ModalConfig('lg', false, 27);
-        this.aboutContent = new OKOnlyContent('Welcome to Angual2 Leaflet Starter', require('../markdowns/about.md'));
+        this.aboutContent = new OKOnlyContent();
     }
 
     showAbout() {
@@ -16,7 +16,7 @@ export class ModalService {
             provide(ICustomModal, { useValue: this.aboutContent }),
             provide(IterableDiffers, {useValue: this.injector.get(IterableDiffers)}),
             provide(KeyValueDiffers, {useValue: this.injector.get(KeyValueDiffers)}),
-            provide(Renderer, {useValue: this.injector.get(Renderer)})
+            provide(Renderer, {useValue: this.renderer})
         ]);
 
         this.modal.open(<any>OKOnlyModal, bindings, this.aboutConfig);

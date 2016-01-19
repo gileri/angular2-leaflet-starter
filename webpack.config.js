@@ -27,6 +27,7 @@ module.exports = {
         loaders: [
             { test: /(\.component|\.service|)\.ts$/, loader: 'ts-loader'},
             { test: /\.component\.html$/, loader: 'raw' },
+            { test: /\.md$/, loader: "html!markdown" },
             { test: /(\.component|)\.less$/, loader: 'to-string!css!less' },
             { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
             { test: /\.(png|gif|jpg)$/, loader: "file?name=images/[name].[ext]" },
