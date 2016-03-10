@@ -30,9 +30,7 @@ export class GeocodingService {
 
     getCurrentLocation() {
         return this.http
-            .get('http://ipv4.myexternalip.com/json')
-            .map(res => res.json().ip)
-            .flatMap(ip => this.http.get('http://freegeoip.net/json/' + ip))
+            .get('http://freegeoip.net/json/')
             .map((res: Response) => res.json())
             .map(result => {
                 var location = new Location();
